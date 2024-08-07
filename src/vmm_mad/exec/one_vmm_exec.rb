@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -1451,33 +1451,6 @@ class ExecDriver < VirtualMachineDriver
         }
 
         steps = [reboot_step]
-
-        if @hypervisor == 'lxd'
-            steps += [
-                {
-                    :driver     => :vnm,
-                    :action     => :clean,
-                    :parameters => [:host]
-                },
-                {
-                    :driver   => :vnm,
-                    :action   => :pre
-                },
-                reboot_step,
-                {
-                    :driver       => :vnm,
-                    :action       => :post,
-                    :parameters   => [:deploy_id, :host],
-                    :fail_actions => [
-                        {
-                            :driver     => :vmm,
-                            :action     => :cancel,
-                            :parameters => [:deploy_id, :host]
-                        }
-                    ]
-                }
-            ]
-        end
 
         action.run(steps)
     end

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -15,6 +15,7 @@
  * ------------------------------------------------------------------------- */
 /* eslint-disable jsdoc/require-jsdoc */
 import PropTypes from 'prop-types'
+import { useAuth } from 'client/features/Auth'
 import { useMemo, useCallback } from 'react'
 import imageApi, { useUpdateImageMutation } from 'client/features/OneApi/image'
 
@@ -46,6 +47,7 @@ import * as Helper from 'client/models/Helper'
 
 const Row = ({ original, value, onClickLabel, ...props }) => {
   const [update] = useUpdateImageMutation()
+  const { labels: userLabels } = useAuth()
 
   const state = imageApi.endpoints.getImages.useQueryState(undefined, {
     selectFromResult: ({ data = [] }) =>
@@ -95,12 +97,19 @@ const Row = ({ original, value, onClickLabel, ...props }) => {
 
   const multiTagLabels = useMemo(
     () =>
-      getUniqueLabels(LABELS).map((label) => ({
-        text: label,
-        stateColor: getColorFromString(label),
-        onClick: onClickLabel,
-        onDelete: handleDeleteLabel,
-      })),
+      getUniqueLabels(LABELS).reduce((acc, label) => {
+        if (userLabels?.includes(label)) {
+          acc.push({
+            text: label,
+            dataCy: `label-${label}`,
+            stateColor: getColorFromString(label),
+            onClick: onClickLabel,
+            onDelete: handleDeleteLabel,
+          })
+        }
+
+        return acc
+      }, []),
     [LABELS, handleDeleteLabel, onClickLabel]
   )
 

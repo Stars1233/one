@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -165,7 +165,11 @@ module OneCfg::Patch
         #
         # @param filename [String] path to patch in YAML format
         def parse_yaml(filename)
-            @patches = YAML.load_file(filename)
+            if Psych::VERSION > '4.0'
+                @patches = YAML.load_file(filename, :aliases => true)
+            else
+                @patches = YAML.load_file(filename)
+            end
 
             return if @patches.is_a?(Hash)
 

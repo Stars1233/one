@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -23,8 +23,6 @@ const baseUrl = `${appName ? `/${appName}/` : '/'}`
 const baseUrlWebsockets = 'websockets/'
 const severityPrepend = 'severity_'
 const assetsClient = '/lib/one/fireedge/dist/client'
-const dockerUrl =
-  'https://hub.docker.com/v2/repositories/library/%s/tags/?page_size=100'
 const apps = {
   [appNameSunstone]: {
     theme: appNameSunstone,
@@ -40,7 +38,6 @@ const default2FAOpennebulaVar = 'TWO_FACTOR_AUTH_SECRET'
 const defaultIp = 'localhost'
 const protocol = 'http'
 const defaults = {
-  dockerUrl,
   defaultTypeCrypto: 'aes-256-cbc',
   /**
    * Empty function.

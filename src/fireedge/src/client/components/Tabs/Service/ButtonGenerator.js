@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -50,7 +50,7 @@ export const ButtonGenerator = ({ items, options = {} }) => {
             aria-controls="customized-menu"
             aria-haspopup="true"
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={handleClick}
             {...options?.button}
             sx={{
@@ -64,7 +64,7 @@ export const ButtonGenerator = ({ items, options = {} }) => {
             aria-controls="customized-menu"
             aria-haspopup="true"
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={handleClick}
             endIcon={items.length > 1 ? <NavArrowDown /> : null}
             {...options?.button}
@@ -100,9 +100,7 @@ export const ButtonGenerator = ({ items, options = {} }) => {
       <IconButton
         aria-controls="customized-menu"
         aria-haspopup="true"
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
+        onClick={(event) => handleClick(event, items.onClick)}
         {...options?.button}
         sx={{
           ...options?.singleButton?.sx,
@@ -113,9 +111,9 @@ export const ButtonGenerator = ({ items, options = {} }) => {
     ) : (
       <Button
         variant="contained"
-        color="primary"
+        color="secondary"
         onClick={(event) => handleClick(event, items.onClick)}
-        startIcon={items.icon ? <items.icon /> : null}
+        startIcon={items.icon || null}
         {...options?.singleButton}
         sx={{
           ...options?.singleButton?.sx,

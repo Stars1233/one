@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -66,12 +66,12 @@ const provision = {
           },
           im_mad: {
             type: 'string',
-            enum: ['kvm', 'firecracker'],
+            enum: ['kvm'],
             required: true,
           },
           vm_mad: {
             type: 'string',
-            enum: ['kvm', 'firecracker'],
+            enum: ['kvm'],
             required: true,
           },
           provision: {

@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -109,6 +109,10 @@ set :bind, conf[:host]
 set :port, conf[:port]
 set :config, conf
 
+set :dump_errors, true
+set :raise_errors, false
+set :show_exceptions, false
+
 # rubocop:disable Style/MixinUsage
 include CloudLogger
 # rubocop:enable Style/MixinUsage
@@ -155,6 +159,19 @@ before do
         error 401, 'Invalid credentials' if @username.nil?
     else
         error 401, 'A username and password must be provided'
+    end
+end
+
+##############################################################################
+# Error handling
+##############################################################################
+
+error 500 do
+    if env['sinatra.error']
+        e = env['sinatra.error']
+        msg_error = { :message => 'Internal server error', :reason => e.message }
+        msg_error[:backtrace] = e.backtrace.join('\n') if settings.config[:log][:level] == 3
+        internal_error(msg_error.to_json, 500)
     end
 end
 

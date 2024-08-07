@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -430,10 +430,6 @@ vcenter://*)
 lxd://*)
     file_type="application/octet-stream"
     command="$VAR_LOCATION/remotes/datastore/lxd_downloader.sh \"$FROM\""
-    ;;
-docker://*|dockerfile://*)
-    file_type="application/octet-stream"
-    command="$VAR_LOCATION/remotes/datastore/docker_downloader.sh \"$FROM\""
     ;;
 restic://*)
     eval `$VAR_LOCATION/remotes/datastore/restic_downloader.rb "$FROM" | grep -e '^command=' -e '^clean_command='`

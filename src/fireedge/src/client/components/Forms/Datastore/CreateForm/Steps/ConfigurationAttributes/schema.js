@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -20,7 +20,6 @@ import { DatastoresTable } from 'client/components/Tables'
 import {
   COMMON_FIELDS,
   CEPH_FIELDS,
-  VCENTER_FIELDS,
   RESTIC_FIELDS,
   RSYNC_FIELDS,
 } from './Fields'
@@ -55,7 +54,6 @@ const COMPATIBLE_SYSTEM_DATASTORES = {
 export const FIELDS = [
   ...COMMON_FIELDS,
   ...CEPH_FIELDS,
-  ...VCENTER_FIELDS,
   ...RESTIC_FIELDS,
   ...RSYNC_FIELDS,
   COMPATIBLE_SYSTEM_DATASTORES,

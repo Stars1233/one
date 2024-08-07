@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/* Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                */
+/* Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                */
 /*                                                                            */
 /* Licensed under the Apache License, Version 2.0 (the "License"); you may    */
 /* not use this file except in compliance with the License. You may obtain    */
@@ -42,6 +42,8 @@ const (
 	EndType  SchedActionKeys = "END_TYPE"
 	EndValue SchedActionKeys = "END_VALUE"
 	Done     SchedActionKeys = "DONE"
+	Message  SchedActionKeys = "MESSAGE"
+	Warning  SchedActionKeys = "WARNING"
 )
 
 // AddSchedAction returns a Scheduled Action structure

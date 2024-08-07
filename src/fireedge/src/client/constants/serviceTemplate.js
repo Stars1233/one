@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -30,9 +30,6 @@ import { LockInfo, Permissions } from 'client/constants/common'
  * @property {string|number} REGTIME - Registration time
  * @property {object} TEMPLATE - Template information
  * @property {string} [TEMPLATE.CONTEXT] - Context
- * @property {string} [TEMPLATE.VCENTER_CCR_REF] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_INSTANCE_ID] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_TEMPLATE_REF] - vCenter information
  */
 
 /**

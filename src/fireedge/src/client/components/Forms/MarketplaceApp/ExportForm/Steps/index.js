@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -19,34 +19,19 @@ import BasicConfiguration, {
 import DatastoresTable, {
   STEP_ID as DATASTORE_ID,
 } from 'client/components/Forms/MarketplaceApp/ExportForm/Steps/DatastoresTable'
-import DockerHubTagsTable, {
-  STEP_ID as TAG_ID,
-} from 'client/components/Forms/MarketplaceApp/ExportForm/Steps/DockerHubTagsTable'
 import { createSteps } from 'client/utils'
 
 const Steps = createSteps(
-  (app) => {
-    const isDockerImage = String(app?.MARKETPLACE).toLowerCase() === 'dockerhub'
-
-    return [
-      BasicConfiguration,
-      DatastoresTable,
-      isDockerImage && DockerHubTagsTable,
-    ].filter(Boolean)
-  },
+  (app) => [BasicConfiguration, DatastoresTable].filter(Boolean),
   {
     transformInitialValue: (app, schema) =>
       schema.cast({}, { context: { app } }),
     transformBeforeSubmit: (formData) => {
-      const {
-        [BASIC_ID]: configuration,
-        [DATASTORE_ID]: [datastore] = [],
-        [TAG_ID]: [tag] = [],
-      } = formData
+      const { [BASIC_ID]: configuration, [DATASTORE_ID]: [datastore] = [] } =
+        formData
 
       return {
         datastore: datastore?.ID,
-        tag: tag?.name,
         ...configuration,
       }
     },

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -33,9 +33,8 @@ DRIVER_PATH=$(dirname $0)
 MARKET_URL=$1
 
 # URL with the context releases
-CONTEXT_API="https://api.github.com/repos/OpenNebula/addon-context-linux/releases"
-CONTEXT_URL="https://github.com/OpenNebula/addon-context-linux/releases/download"
-
+CONTEXT_API="https://api.github.com/repos/OpenNebula/one-apps/releases"
+CONTEXT_URL="https://github.com/OpenNebula/one-apps/releases/download"
 
 PKG_RPM="util-linux bash curl bind-utils cloud-utils-growpart parted ruby rubygem-json sudo shadow-utils openssh-server qemu-guest-agent gawk virt-what"
 PKG_el7=$PKG_RPM

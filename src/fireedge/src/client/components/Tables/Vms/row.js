@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -18,7 +18,7 @@ import { memo, useCallback, useMemo } from 'react'
 
 import { ConsoleButton } from 'client/components/Buttons'
 import { VirtualMachineCard } from 'client/components/Cards'
-import { VM_ACTIONS } from 'client/constants'
+import { VM_ACTIONS, VM_EXTENDED_POOL } from 'client/constants'
 import { useGeneral } from 'client/features/General'
 import vmApi, { useUpdateUserTemplateMutation } from 'client/features/OneApi/vm'
 import { jsonToXml } from 'client/models/Helper'
@@ -33,10 +33,13 @@ const Row = memo(
 
     const [update] = useUpdateUserTemplateMutation()
 
-    const state = vmApi.endpoints.getVms.useQueryState(undefined, {
-      selectFromResult: ({ data = [] }) =>
-        data.find((vm) => +vm.ID === +original.ID),
-    })
+    const state = vmApi.endpoints.getVms.useQueryState(
+      { extended: VM_EXTENDED_POOL },
+      {
+        selectFromResult: ({ data = [] }) =>
+          data.find((vm) => +vm.ID === +original.ID),
+      }
+    )
 
     const memoVm = useMemo(() => state ?? original, [state, original])
 

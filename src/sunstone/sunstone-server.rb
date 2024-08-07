@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -323,7 +323,7 @@ SUPPORT = {
     :author_name => "OpenNebula Support Team",
     :support_subscription => "https://opennebula.io/support/",
     :account => "https://opennebula.io/buy-support",
-    :docs => "https://docs.opennebula.io/6.9/",
+    :docs => "https://docs.opennebula.io/6.10/",
     :community => "https://opennebula.io/usec",
     :project => "OpenNebula"
 }
@@ -1190,13 +1190,6 @@ get '/marketplaceapp/:id/download' do
             end
         end
     end
-end
-
-##############################################################################
-# Retrive DockerHub tags
-##############################################################################
-get '/marketplaceapp/:id/tags' do
-    @SunstoneServer.get_docker_tags(params[:id])
 end
 
 ##############################################################################

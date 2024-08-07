@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -49,14 +49,6 @@ function isLvm(type) {
 
 /**
  * @param {string} type - Datastore type
- * @returns {boolean} - True if type is vcenter
- */
-function isVcenter(type) {
-  return type === DS_STORAGE_BACKENDS.VCENTER.value
-}
-
-/**
- * @param {string} type - Datastore type
  * @returns {boolean} - True if type is raw
  */
 function isRaw(type) {
@@ -101,7 +93,6 @@ export {
   isSsh,
   isCeph,
   isLvm,
-  isVcenter,
   isRaw,
   isRestic,
   isRsync,

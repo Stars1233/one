@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -47,7 +47,8 @@ const HYPERVISOR_FIELD = {
 /** @type {Field} Name field */
 const INFORMATION_FIELD = {
   name: 'hostname',
-  label: T.Name,
+  label: T['host.form.create.general.name'],
+  tooltip: T['host.form.create.general.name.tooltip'],
   type: INPUT_TYPES.TEXT,
   validation: string()
     .trim()

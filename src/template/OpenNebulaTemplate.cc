@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/* Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                */
+/* Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                */
 /*                                                                            */
 /* Licensed under the Apache License, Version 2.0 (the "License"); you may    */
 /* not use this file except in compliance with the License. You may obtain    */
@@ -127,11 +127,11 @@ void OpenNebulaTemplate::set_multiple_conf_default()
     # s3
     #******
     */
-    set_conf_market("one",  "", "monitor");
+    set_conf_market("one", "", "monitor");
     set_conf_market("http", "BASE_URL,PUBLIC_DIR", "create, delete, monitor");
-    set_conf_market("s3",   "ACCESS_KEY_ID,SECRET_ACCESS_KEY,REGION,BUCKET",
+    set_conf_market("s3", "ACCESS_KEY_ID,SECRET_ACCESS_KEY,REGION,BUCKET",
                     "create, delete, monitor");
-    set_conf_market("docker_registry", "BASE_URL", "monitor");
+    set_conf_market("linuxcontainers", "", "monitor");
 
     register_multiple_conf_default("MARKET_MAD_CONF");
     /*

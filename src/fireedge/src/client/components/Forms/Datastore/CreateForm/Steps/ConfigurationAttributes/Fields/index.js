@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -15,14 +15,7 @@
  * ------------------------------------------------------------------------- */
 import { COMMON_FIELDS } from './common'
 import { CEPH_FIELDS } from './ceph'
-import { VCENTER_FIELDS } from './vcenter'
 import { RESTIC_FIELDS } from './restic'
 import { RSYNC_FIELDS } from './rsync'
 
-export {
-  COMMON_FIELDS,
-  CEPH_FIELDS,
-  VCENTER_FIELDS,
-  RESTIC_FIELDS,
-  RSYNC_FIELDS,
-}
+export { COMMON_FIELDS, CEPH_FIELDS, RESTIC_FIELDS, RSYNC_FIELDS }

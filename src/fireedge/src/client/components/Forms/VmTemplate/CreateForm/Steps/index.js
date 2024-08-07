@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -83,6 +83,15 @@ const Steps = createSteps([General, ExtraConfiguration, CustomVariables], {
       objectSchema[EXTRA_ID].CONTEXT = {
         ...objectSchema[EXTRA_ID].CONTEXT,
         INIT_SCRIPTS: vmTemplate?.TEMPLATE?.CONTEXT?.INIT_SCRIPTS.split(' '),
+      }
+    }
+
+    // Init GRPAHICS.TYPE
+    const type = vmTemplate?.TEMPLATE?.GRAPHICS?.TYPE === 'VNC'
+    if (type) {
+      objectSchema[EXTRA_ID].GRAPHICS = {
+        ...vmTemplate?.GRAPHICS,
+        TYPE: type,
       }
     }
 

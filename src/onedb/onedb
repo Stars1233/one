@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -120,7 +120,7 @@ SQLITE={
 }
 
 ###############################################################################
-# MySQL and PostgreSQL options
+# MySQL options
 ###############################################################################
 TYPE={
     :name => 'type',
@@ -138,8 +138,7 @@ SERVER={
     :short => '-S host',
     :large => '--server host',
     :format => String,
-    :description => 'MySQL or PostgreSQL server hostname or IP. ' \
-                    'Defaults to localhost',
+    :description => 'MySQL server hostname or IP. Defaults to localhost',
     :proc => lambda {|o, options|
         options[:server]  = o
     }
@@ -150,8 +149,7 @@ PORT={
     :short => '-P port',
     :large => '--port port',
     :format => String,
-    :description => 'MySQL or PostgreSQL server port. Defaults to ' \
-                    '3306 for MySQL and 5432 for PostgreSQL',
+    :description => 'MySQL server port. Defaults to 3306',
     :proc => lambda {|o, options|
         options[:port] = o
     }
@@ -162,7 +160,7 @@ USERNAME={
     :short => '-u user',
     :large => '--username user',
     :format => String,
-    :description => 'MySQL or PostgreSQL username',
+    :description => 'MySQL username',
     :proc => lambda {|o, options|
         options[:user]    = o
     }
@@ -173,8 +171,7 @@ PASSWORD={
     :short => '-p pass',
     :large => '--password pass',
     :format => String,
-    :description => 'MySQL or PostgreSQL password. Leave unset ' \
-                    'to be prompted for it',
+    :description => 'MySQL password. Leave unset to be prompted for it',
     :proc => lambda {|o, options|
         options[:passwd]  = o
     }
@@ -185,7 +182,7 @@ DBNAME={
     :short => '-d dbname',
     :large => '--dbname dbname',
     :format => String,
-    :description => 'MySQL or PostgreSQL DB name for OpenNebula',
+    :description => 'MySQL DB name for OpenNebula',
     :proc => lambda {|o, options|
         options[:db_name] = o
     }
@@ -195,7 +192,7 @@ ENCODING={
     :name => 'encoding',
     :large => '--encoding charset',
     :format => String,
-    :description => 'MySQL or PostgreSQL encoding to use for the connection',
+    :description => 'MySQL encoding to use for the connection',
     :proc => lambda {|o, options|
         options[:encoding] = o
     }
@@ -331,7 +328,7 @@ EXPR= {
 DRY= {
     :name => 'dry',
     :large => '--dry',
-    :description => 'Do not write in the database, output xml'
+    :description => 'Do not write in the database, output on stdout'
 }
 
 DELETE= {
@@ -482,7 +479,7 @@ CommandParser::CmdParser.new(ARGV) do
         Checks the consistency of the DB, and fixes the problems found
     EOT
 
-    command :fsck, fsck_desc, :options=>[FORCE, BACKUP] do
+    command :fsck, fsck_desc, :options=>[FORCE, BACKUP, DRY] do
         begin
             helper = OneDB.new(options)
             helper.fsck(options)

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -20,6 +20,7 @@ import {
   number,
   string,
   boolean,
+  mixed,
   object,
   array,
   date,
@@ -29,26 +30,28 @@ import { T } from 'client/constants'
 import { isDivisibleBy, isBase64 } from 'client/utils/number'
 
 const buildMethods = () => {
-  ;[number, string, boolean, object, array, date].forEach((schemaType) => {
-    addMethod(schemaType, 'afterSubmit', function (fn) {
-      this._mutate = true // allows to mutate the initial schema
-      this.submit = (...args) =>
-        typeof fn === 'function' ? fn(...args) : args[0]
+  ;[number, string, boolean, mixed, object, array, date].forEach(
+    (schemaType) => {
+      addMethod(schemaType, 'afterSubmit', function (fn) {
+        this._mutate = true // allows to mutate the initial schema
+        this.submit = (...args) =>
+          typeof fn === 'function' ? fn(...args) : args[0]
 
-      return this
-    })
-    addMethod(schemaType, 'cast', function (value, options = {}) {
-      const resolvedSchema = this.resolve({ value, ...options })
-      let result = resolvedSchema._cast(value, options)
+        return this
+      })
+      addMethod(schemaType, 'cast', function (value, options = {}) {
+        const resolvedSchema = this.resolve({ value, ...options })
+        let result = resolvedSchema._cast(value, options)
 
-      if (options.isSubmit) {
-        const needChangeAfterSubmit = typeof this.submit === 'function'
-        needChangeAfterSubmit && (result = this.submit(result, options))
-      }
+        if (options.isSubmit) {
+          const needChangeAfterSubmit = typeof this.submit === 'function'
+          needChangeAfterSubmit && (result = this.submit(result, options))
+        }
 
-      return result
-    })
-  })
+        return result
+      })
+    }
+  )
   addMethod(boolean, 'yesOrNo', function (addAfterSubmit = true) {
     const schema = this.transform(function (value) {
       return !this.isType(value) ? String(value).toUpperCase() === 'YES' : value
@@ -96,9 +99,9 @@ const buildTranslationLocale = () => {
 
   setLocale({
     mixed: {
-      default: () => T['validation.mixed.default'],
-      required: () => T['validation.mixed.required'],
-      defined: () => T['validation.mixed.defined'],
+      default: ({ path }) => `${path} ${T['validation.mixed.default']}`,
+      required: ({ path }) => `${path} ${T['validation.mixed.required']}`,
+      defined: ({ path }) => `${path} ${T['validation.mixed.defined']}`,
       oneOf: ({ values }) => ({ word: T['validation.mixed.oneOf'], values }),
       notOneOf: ({ values }) => ({
         word: T['validation.mixed.notOneOf'],

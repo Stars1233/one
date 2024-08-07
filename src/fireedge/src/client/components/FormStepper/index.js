@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -208,14 +208,28 @@ const FormStepper = ({
 
   const setErrors = ({ inner = [], message = { word: 'Error' } } = {}) => {
     const errorsByPath = groupBy(inner, 'path') ?? {}
-    const totalErrors = Object.keys(errorsByPath).length
+    const totalErrors = Object.values(errorsByPath).reduce((count, value) => {
+      if (Array.isArray(value)) {
+        const filteredValue = value?.filter(Boolean) || []
+
+        return count + filteredValue?.length || 0
+      }
+
+      return count
+    }, 0)
 
     const translationError =
       totalErrors > 0 ? [T.ErrorsOcurred, totalErrors] : Object.values(message)
 
-    setError(stepId, { type: 'manual', message: translationError })
+    const individualErrorMessages = inner.map((error) => error?.message ?? '')
 
-    inner?.forEach(({ path, type, errors: innerMessage }) => {
+    setError(stepId, {
+      type: 'manual',
+      message: translationError,
+      individualErrorMessages,
+    })
+
+    inner?.forEach(({ path, type, errors: innerMessage }, index) => {
       setError(`${stepId}.${path}`, { type, message: innerMessage })
     })
   }

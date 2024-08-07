@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -67,7 +67,12 @@ const Steps = createSteps([General, UserInputs, Network, Charter], {
     } = formData
 
     const formatTemplate = {
-      custom_attrs_values: { ...userInputsData },
+      custom_attrs_values: Object.fromEntries(
+        Object.entries(userInputsData).map(([key, value]) => [
+          key.toUpperCase(),
+          String(value),
+        ])
+      ),
       networks_values: networkData?.NETWORKS?.map((network) => ({
         [network?.name]: {
           [['existing', 'reserve'].includes(network?.tableType)

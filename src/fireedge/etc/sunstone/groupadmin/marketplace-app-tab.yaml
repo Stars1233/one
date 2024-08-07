@@ -8,15 +8,17 @@ resource_name: "MARKETPLACE-APP"
 # Actions - Which buttons are visible to operate over the resources
 
 actions:
-  create_dialog: true
+  create_dialog: false
   export: true
   download: true
-  chown: true
-  chgrp: true
-  enable: true
-  disable: true
-  delete: true
-  edit_labels: true
+  chown: false
+  chgrp: false
+  enable: false
+  disable: false
+  delete: false
+  edit_labels: false
+  lock: false
+  unlock: false
 
 # Filters - List of criteria to filter the resources
 
@@ -38,23 +40,23 @@ info-tabs:
     information_panel:
       enabled: true
       actions:
-        rename: true
+        rename: false
     permissions_panel:
       enabled: true
       actions:
-        chmod: true
+        chmod: false
     ownership_panel:
       enabled: true
       actions:
-        chown: true
-        chgrp: true
+        chown: false
+        chgrp: false
     attributes_panel:
-      enabled: true
+      enabled: false
       actions:
-        copy: true
-        add: true
-        edit: true
-        delete: true
+        copy: false
+        add: false
+        edit: false
+        delete: false
 
   template:
     enabled: true

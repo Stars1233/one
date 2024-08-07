@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -248,7 +248,7 @@ module.exports = {
   /* questions */
   Yes: 'Yes',
   No: 'No',
-  DoYouWantProceed: 'Do you want proceed?',
+  DoYouWantProceed: 'Do you want to proceed?',
 
   /* Scheduling */
   Action: 'Action',
@@ -281,12 +281,12 @@ module.exports = {
   Monthly: 'Monthly',
   Yearly: 'Yearly',
   Hourly: 'Hourly',
-  Years: 'Years',
-  Months: 'Months',
-  Weeks: 'Weeks',
-  Days: 'Days',
-  Hours: 'Hours',
-  Minutes: 'Minutes',
+  Years: 'years',
+  Months: 'months',
+  Weeks: 'weeks',
+  Days: 'days',
+  Hours: 'hours',
+  Minutes: 'minutes',
   EachHours: 'Each %s hours',
   AfterTimes: 'After %s times',
   Today: 'Today',
@@ -616,6 +616,10 @@ module.exports = {
     'Datastores can be added to multiple clusters. This means that any host in those clusters is properly configured to run VMs using images from those datastores.',
   'cluster.form.create.datastores.help.paragraph.3':
     'Remember that in order to create a complete environment where the scheduler can deploy VMs, your clusters need to have at least one System Datastore.',
+  'host.form.create.general.name':
+    'FQDN or IP that OpenNebula can use to reach the hypervisor host',
+  'host.form.create.general.name.tooltip':
+    "Please make sure the OpenNebula front-end can ssh passwrodlessly to the host using the 'oneadmin' user",
 
   /* sections - network */
   Network: 'Network',
@@ -692,7 +696,6 @@ module.exports = {
   FilesystemShared: 'Filesystem - shared mode',
   FilesystemSSH: 'Filesystem - SSH mode',
   Ceph: 'Ceph',
-  Vcenter: 'vCenter',
   LVM: 'LVM',
   RawDeviceMapping: 'Raw device mapping',
   StorageRestic: 'Backup - Restic (EE only)',
@@ -777,13 +780,6 @@ module.exports = {
   TypeOfDiskToBeCreated: 'Type of disk to be created',
   ManagedObjectReferenceOfTheDatastore:
     'Managed Object Reference of the datastore',
-  NameOfTheVcenterDatastore: 'Name of the vCenter datastore',
-  ManagedObjectReferenceOfTheDatacenter:
-    'Managed Object Reference of the vCenter datacenter',
-  NameOfTheVcenterDatacenter: 'Name of the vCenter datacenter',
-  vCenterImageDirectory: 'vCenter image directory',
-  vCenterVolatileDirectory: 'vCenter volatile directory',
-  HostnameOrIPOfTheVcenterHost: 'Hostname or IP of the vCenter host',
   MaxNumberOSThreads: 'Max number of OS threads',
   MaxNumberOSThreadsConcept:
     'Sets GOMAXPROCS for restic to limit the OS threads that execute user-level Go code simultaneously.',
@@ -911,7 +907,6 @@ module.exports = {
 
   /* instances schema */
   DeployID: 'Deploy ID',
-  vCenterDeployment: 'vCenter Deployment',
   Deployment: 'Deployment',
   Monitoring: 'Monitoring',
   EdgeCluster: 'Edge Cluster',
@@ -932,7 +927,6 @@ module.exports = {
   FullScreenInfo: 'Full screen information in datatables',
   Screenshot: 'Screenshot',
   LastConnection: 'Last connection',
-  VmIsNotOnVCenter: '%s is not located on vCenter Host',
   PartOf: 'Part of',
   GuacamoleState: 'Guacamole State',
   VMRCState: 'VMRC State',
@@ -1192,18 +1186,6 @@ module.exports = {
   ScheduledPolicy: 'Scheduled Policy',
   ScheduledPolicies: 'Scheduled Policies',
   AssociateToVMGroup: 'Associate VM to a VM Group',
-  /* VM Template schema - vCenter */
-  vCenterTemplateRef: 'vCenter Template reference',
-  vCenterClusterRef: 'vCenter Cluster reference',
-  vCenterInstanceId: 'vCenter instance ID',
-  vCenterVmFolder: 'vCenter VM folder',
-  vCenterVmFolderConcept: `
-    If specified, the VMs and Template folder path where
-    the VM will be created inside the data center.
-    The path is delimited by slashes (e.g /Management/VMs).
-    If no path is set the VM will be placed in the same folder where
-    the template is located.
-  `,
   /* VM Template schema - placement */
   HostRequirements: 'Host Requirements',
   DatastoreRequirements: 'Datastore Requirements',
@@ -1777,8 +1759,6 @@ module.exports = {
   'marketplace.form.configuration.one.help.link':
     'See OpenNebula documentation to get more details about OpenNebula Systems marketplaces.',
 
-  'marketplace.form.configuration.http.url':
-    'Base URL of the Marketplace HTTP endpoint',
   'marketplace.form.configuration.http.path': 'Marketapp directory path',
   'marketplace.form.configuration.http.path.tooltip':
     'Absolute directory path to place images (the HTTP server document root) in the Front-end or in the Hosts pointed at by the Storage bridge list',
@@ -1823,34 +1803,39 @@ module.exports = {
   'marketplace.form.configuration.s3.help.link':
     'See OpenNebula documentation to get more details about S3 marketplaces.',
 
-  'marketplace.form.configuration.dockerhub.info':
-    'No configuration attributes are needed for Dockerhub.',
-  'marketplace.form.configuration.dockerhub.help.paragraph.1':
-    'The DockerHub Marketplace provide access to DockerHub Official Images. The OpenNebula context packages are installed during the import process so once an image is imported it’s fully prepared to be used.',
-  'marketplace.form.configuration.dockerhub.help.paragraph.2':
-    'Please, fill the configuration attributes for DockerHub Marketplace.',
-  'marketplace.form.configuration.dockerhub.help.link':
-    'See OpenNebula documentation to get more details about DockerHub marketplaces.',
-
-  'marketplace.form.configuration.dockerRegistry.url':
-    'Marketplace Docker registry url',
-  'marketplace.form.configuration.dockerRegistry.url.tooltip':
-    'Base URL of the Marketplace Docker registry endpoint',
-  'marketplace.form.configuration.dockerRegistry.ssl': 'SSL connection',
-  'marketplace.form.configuration.dockerRegistry.ssl.tooltip':
-    'Check if the registry is behind SSL proxy',
-  'marketplace.form.configuration.dockerRegistry.help.paragraph.1':
-    'This Marketplace uses a private Docker registry server to expose the images in it as Marketplace Appliances.',
-  'marketplace.form.configuration.dockerRegistry.help.paragraph.2':
-    'Please, fill the configuration attributes for Docker Registry Marketplace.',
-  'marketplace.form.configuration.dockerRegistry.help.link':
-    'See OpenNebula documentation to get more details about Docker Registry marketplaces.',
+  'marketplace.form.configuration.linuxcontainers.imageSize':
+    'Size in MB for the image holding the rootfs',
+  'marketplace.form.configuration.linuxcontainers.filesystem':
+    'Filesystem used for the image',
+  'marketplace.form.configuration.linuxcontainers.format':
+    'Image block file format',
+  'marketplace.form.configuration.linuxcontainers.skip_untested':
+    'Include only apps with support for context',
+  'marketplace.form.configuration.linuxcontainers.cpu': 'VMTemplate CPU',
+  'marketplace.form.configuration.linuxcontainers.vcpu': 'VMTemplate VCPU',
+  'marketplace.form.configuration.linuxcontainers.memory': 'VMTemplate MEMORY',
+  'marketplace.form.configuration.linuxcontainers.privileged':
+    'Security mode of the Linux Container',
+  'marketplace.form.configuration.linuxcontainers.help.paragraph.1.1': 'The ',
+  'marketplace.form.configuration.linuxcontainers.help.paragraph.1.2':
+    'Linux Containers image server ',
+  'marketplace.form.configuration.linuxcontainers.help.paragraph.1.3':
+    'hosts a public image server with container images for LXC. OpenNebula’s Linux Containers marketplace enable users to easily download, contextualize and add Linux containers images to an OpenNebula datastore.',
+  'marketplace.form.configuration.linuxcontainers.help.paragraph.1.link':
+    'https://images.linuxcontainers.org/',
+  'marketplace.form.configuration.linuxcontainers.help.paragraph.2':
+    'Please, fill the configuration attributes for Linux Containers Marketplace.',
+  'marketplace.form.configuration.linuxcontainers.help.link':
+    'See OpenNebula documentation to get more details about Linux Containers marketplaces.',
 
   'marketplace.types.one': 'OpenNebula Systems',
   'marketplace.types.http': 'HTTP',
   'marketplace.types.s3': 'Amazon S3',
   'marketplace.types.dockerhub': 'DockerHub',
   'marketplace.types.dockerRegistry': 'Docker Registry',
+  'marketplace.types.linuxcontainers': 'Linux Containers',
+
+  'marketplace.form.configuration.url': 'Base URL of the Marketplace',
 
   /* Marketplace App - general */
   MarketplaceApp: 'Marketplace app',
@@ -2294,7 +2279,6 @@ module.exports = {
 
   /* Error messages */
   ErrorExportingData: 'Error exporting data to %s : %s',
-  ErrorVmNoLocatedVenter: '%s - %s is not located on vCenter Host',
   ErrorVmTemplateFetching: 'Error fetching VM templates data: %s',
   ErrorHostFetching: 'Error fetching host data: %s',
   ErrorUserInputAutocompleteFetch: 'Failed to fetch official suggestions',

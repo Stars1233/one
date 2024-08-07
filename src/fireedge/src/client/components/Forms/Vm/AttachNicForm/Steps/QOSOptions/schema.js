@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -25,8 +25,7 @@ import {
 } from 'client/utils'
 import { T, INPUT_TYPES, HYPERVISORS, VN_DRIVERS } from 'client/constants'
 
-const { firecracker } = HYPERVISORS
-const { ovswitch, vcenter } = VN_DRIVERS
+const { ovswitch } = VN_DRIVERS
 
 const filterByHypAndDriver = (fields, { hypervisor, driver }) =>
   filterFieldsByDriver(filterFieldsByHypervisor(fields, hypervisor), driver)
@@ -38,7 +37,6 @@ const OVERRIDE_IN_QOS_FIELDS = [
     label: T.AverageBandwidth,
     tooltip: T.InboundAverageBandwidthConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
     htmlType: 'number',
     validation: number()
       .notRequired()
@@ -49,7 +47,6 @@ const OVERRIDE_IN_QOS_FIELDS = [
     label: T.PeakBandwidth,
     tooltip: T.InboundPeakBandwidthConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
     htmlType: 'number',
     validation: number()
       .notRequired()
@@ -60,8 +57,6 @@ const OVERRIDE_IN_QOS_FIELDS = [
     label: T.PeakBurst,
     tooltip: T.PeakBurstConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
-    notOnDrivers: [vcenter],
     htmlType: 'number',
     validation: number()
       .notRequired()
@@ -76,7 +71,6 @@ const OVERRIDE_OUT_QOS_FIELDS = [
     label: T.AverageBandwidth,
     tooltip: T.OutboundAverageBandwidthConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
     notOnDrivers: [ovswitch],
     htmlType: 'number',
     validation: number()
@@ -88,7 +82,6 @@ const OVERRIDE_OUT_QOS_FIELDS = [
     label: T.PeakBandwidth,
     tooltip: T.OutboundPeakBandwidthConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
     notOnDrivers: [ovswitch],
     htmlType: 'number',
     validation: number()
@@ -100,8 +93,7 @@ const OVERRIDE_OUT_QOS_FIELDS = [
     label: T.PeakBurst,
     tooltip: T.PeakBurstConcept,
     type: INPUT_TYPES.TEXT,
-    notOnHypervisors: [firecracker],
-    notOnDrivers: [ovswitch, vcenter],
+    notOnDrivers: [ovswitch],
     htmlType: 'number',
     validation: number()
       .notRequired()

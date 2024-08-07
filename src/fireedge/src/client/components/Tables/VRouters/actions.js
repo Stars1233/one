@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -87,10 +87,10 @@ const Actions = () => {
         filters: getResourceView(RESOURCE_NAMES.VROUTER)?.actions,
         actions: [
           {
-            accessor: VROUTER_ACTIONS.CREATE_DIALOG,
-            tooltip: T.Create,
+            accessor: VROUTER_ACTIONS.INSTANTIATE_DIALOG,
+            tooltip: T.Instantiate,
             icon: AddCircledOutline,
-            action: () => history.push(PATH.TEMPLATE.VROUTERS.INSTANTIATE),
+            action: () => history.push(PATH.INSTANCE.VROUTERS.INSTANTIATE),
           },
           {
             tooltip: T.Ownership,

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -24,7 +24,7 @@ require 'rexml/document'
 require 'time'
 require 'digest/md5'
 
-require_relative '../common/lxd'
+require_relative 'lxd'
 
 #-------------------------------------------------------------------------------
 #
@@ -49,8 +49,8 @@ class LinuxContainersMarket
         :fs            => 'ext4',
         :format        => 'raw',
         :agent         => 'OpenNebula',
-        :tested_apps   => ['alpine', 'alt', 'centos', 'rockylinux', 'almalinux', 'oracle',
-                           'debian', 'ubuntu', 'fedora', 'devuan', 'opensuse', 'amazonlinux'],
+        :tested_apps   => ['alpine', 'alt', 'rockylinux', 'almalinux', 'oracle',
+                           'debian', 'ubuntu', 'fedora', 'devuan', 'amazonlinux'],
         :skip_untested => 'yes',
         :memory        => '768',
         :cpu           => 1,
@@ -72,9 +72,7 @@ class LinuxContainersMarket
     # Get container information
     def get(path)
         uri = URI(@options[:url] + path)
-
-        req = Net::HTTP::Get.new(uri.request_uri)
-        req['User-Agent'] = @options[:agent]
+        req = Net::HTTP::Get.new(uri.request_uri, { 'User-Agent' => @options[:agent] })
 
         response = @http_client.request(req)
 
@@ -134,7 +132,7 @@ class LinuxContainersMarket
             builddate = DateTime.strptime(regtime, '%Y%m%d_%H:%M').to_time.to_i
 
             data = {
-                'NAME'        => "#{distro}_#{version} - LXD",
+                'NAME'        => "#{distro}_#{version} - LXC",
                 'SIZE'        => @options[:sizemb],
                 'PUBLISHER'   => @options[:url],
                 'FORMAT'      => @options[:format],

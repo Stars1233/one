@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -22,7 +22,7 @@ class OneImageHelper < OpenNebulaHelper::OneHelper
 
     # This list contains prefixes that should skip adding user home to the path
     # This must have the same content as the case $FROM in downloader.sh
-    PREFIXES = ['http', 'https', 'ssh', 's3', 'rbd', 'vcenter', 'lxd', 'docker', 'dockerfile']
+    PREFIXES = ['http', 'https', 'ssh', 's3', 'rbd', 'vcenter', 'lxd']
 
     TEMPLATE_OPTIONS=[
         {

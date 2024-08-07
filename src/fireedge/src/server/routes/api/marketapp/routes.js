@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -26,13 +26,11 @@ const basepath = '/marketapp'
 const MARKETAPP_EXPORT = 'marketapp.export'
 const MARKETAPP_DOWNLOAD = 'marketapp.download'
 const MARKETAPP_IMPORT = 'marketapp.import'
-const MARKETAPP_DOCKERTAGS = 'marketapp.dockertags'
 
 const Actions = {
   MARKETAPP_EXPORT,
   MARKETAPP_DOWNLOAD,
   MARKETAPP_IMPORT,
-  MARKETAPP_DOCKERTAGS,
 }
 
 module.exports = {
@@ -101,19 +99,6 @@ module.exports = {
         },
         vmname: {
           from: postBody,
-        },
-      },
-    },
-    [MARKETAPP_DOCKERTAGS]: {
-      path: `${basepath}/dockertags/:id`,
-      httpMethod: GET,
-      auth: true,
-      params: {
-        id: {
-          from: resource,
-        },
-        page: {
-          from: query,
         },
       },
     },

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and       *
  * limitations under the License.                                            *
  * ------------------------------------------------------------------------- */
-import { ObjectSchema, boolean, lazy, string } from 'yup'
+import { ObjectSchema, boolean, lazy, string, mixed } from 'yup'
 
 import { HYPERVISORS, INPUT_TYPES, T } from 'client/constants'
 import {
@@ -24,7 +24,7 @@ import {
   getObjectSchemaFromFields,
 } from 'client/utils'
 
-const { vcenter, lxc, kvm } = HYPERVISORS
+const { lxc } = HYPERVISORS
 const CUSTOM_KEYMAP_VALUE = 'custom'
 const KEYMAP_VALUES = {
   ar: T.Arabic,
@@ -68,21 +68,24 @@ const KEYMAP_VALUES = {
 /** @type {Field} Type field */
 export const TYPE = (isUpdate) => ({
   name: 'GRAPHICS.TYPE',
-  type: INPUT_TYPES.TOGGLE,
+  type: INPUT_TYPES.SWITCH,
+  label: T.Vnc,
   dependOf: ['HYPERVISOR', '$general.HYPERVISOR'],
-  values: ([templateHyperv = kvm, hypervisor = templateHyperv] = []) => {
-    const types = {
-      [vcenter]: [T.Vmrc],
-      [lxc]: [T.Vnc],
-    }[hypervisor] ?? [T.Vnc, T.Sdl, T.Spice]
+  validation: mixed()
+    .default(() => (isUpdate ? undefined : true))
+    .afterSubmit((value, { context }) => (value ? 'VNC' : undefined))
+    .test('is-valid-type', 'Invalid value', function (value) {
+      if (
+        typeof value === 'boolean' ||
+        value === 'VNC' ||
+        value === undefined
+      ) {
+        return true
+      }
 
-    return arrayToOptions(types)
-  },
-  validation: string()
-    .trim()
-    .notRequired()
-    .uppercase()
-    .default(() => (isUpdate ? undefined : T.Vnc)),
+      return false
+    }),
+
   grid: { md: 12 },
 })
 

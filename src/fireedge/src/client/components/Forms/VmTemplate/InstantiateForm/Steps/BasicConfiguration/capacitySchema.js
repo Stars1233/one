@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -16,7 +16,6 @@
 import { NumberSchema } from 'yup'
 
 import {
-  HYPERVISORS,
   INPUT_TYPES,
   T,
   USER_INPUT_TYPES,
@@ -62,7 +61,6 @@ export const FIELDS = (
   { hide_cpu: hideCpu, cpu_factor: cpuFactor } = {}
 ) => {
   const {
-    HYPERVISOR,
     USER_INPUTS = {},
     MEMORY = '',
     CPU = '',
@@ -84,8 +82,7 @@ export const FIELDS = (
   return fields.map(({ name, options, ...userInput }) => {
     const isMemory = name === 'MEMORY'
     const isCPU = name === 'CPU'
-    const isVCenter = HYPERVISOR === HYPERVISORS.vcenter
-    const divisibleBy4 = isVCenter && isMemory
+    const divisibleBy4 = isMemory
     const isRange = [range, rangeFloat].includes(userInput.type)
 
     // set default type to number

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -39,7 +39,7 @@ export const UID_FIELD = {
     .trim()
     .notRequired()
     .default(() => undefined),
-  grid: { md: 12 },
+  grid: { md: 6 },
 }
 
 /** @type {Field} Group id field */
@@ -61,7 +61,7 @@ export const GID_FIELD = {
     .trim()
     .notRequired()
     .default(() => undefined),
-  grid: { md: 12 },
+  grid: { md: 6 },
 }
 
 /** @type {Field[]} List of ownership fields */

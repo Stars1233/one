@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -29,7 +29,6 @@ import {
 } from './capacitySchema'
 import { FIELDS as VM_GROUP_FIELDS } from './vmGroupSchema'
 import { FIELDS as OWNERSHIP_FIELDS } from './ownershipSchema'
-import { FIELDS as VCENTER_FIELDS } from './vcenterSchema'
 
 import {
   Section,
@@ -45,21 +44,18 @@ import { T, HYPERVISORS, VmTemplateFeatures } from 'client/constants'
  * @param {VmTemplateFeatures} [features] - Features
  * @param {object} oneConfig - Config of oned.conf
  * @param {boolean} adminGroup - User is admin or not
+ * @param {boolean} isVrouter - VRouter template
  * @returns {Section[]} Fields
  */
-const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
+const SECTIONS = (
+  hypervisor,
+  isUpdate,
+  features,
+  oneConfig,
+  adminGroup,
+  isVrouter
+) =>
   [
-    {
-      id: 'information',
-      legend: T.Information,
-      required: true,
-      fields: disableFields(
-        INFORMATION_FIELDS(isUpdate),
-        '',
-        oneConfig,
-        adminGroup
-      ),
-    },
     {
       id: 'hypervisor',
       legend: T.Hypervisor,
@@ -72,10 +68,11 @@ const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
       ),
     },
     {
-      id: 'capacity',
-      legend: T.Memory,
+      id: 'information',
+      legend: T.Information,
+      required: true,
       fields: disableFields(
-        filterFieldsByHypervisor(MEMORY_FIELDS, hypervisor),
+        INFORMATION_FIELDS(isUpdate),
         '',
         oneConfig,
         adminGroup
@@ -83,8 +80,25 @@ const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
     },
     {
       id: 'capacity',
+      legend: T.Memory,
       fields: disableFields(
-        filterFieldsByHypervisor(MEMORY_RESIZE_FIELDS, hypervisor),
+        filterFieldsByHypervisor(
+          [...MEMORY_FIELDS, ...MEMORY_RESIZE_FIELDS],
+          hypervisor
+        ),
+        '',
+        oneConfig,
+        adminGroup
+      ),
+    },
+    {
+      id: 'ownership',
+      legend: T.Ownership,
+      fields: disableFields(
+        filterFieldsByHypervisor(
+          [...OWNERSHIP_FIELDS, ...VM_GROUP_FIELDS],
+          hypervisor
+        ),
         '',
         oneConfig,
         adminGroup
@@ -101,16 +115,6 @@ const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
       ),
     },
     {
-      id: 'capacity',
-      legend: T.VirtualCpu,
-      fields: disableFields(
-        filterFieldsByHypervisor(VCPU_FIELDS, hypervisor),
-        '',
-        oneConfig,
-        adminGroup
-      ),
-    },
-    {
       id: 'showback',
       legend: T.Cost,
       fields: disableFields(
@@ -121,30 +125,10 @@ const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
       ),
     },
     {
-      id: 'ownership',
-      legend: T.Ownership,
+      id: 'capacity',
+      legend: T.VirtualCpu,
       fields: disableFields(
-        filterFieldsByHypervisor(OWNERSHIP_FIELDS, hypervisor),
-        '',
-        oneConfig,
-        adminGroup
-      ),
-    },
-    {
-      id: 'vm_group',
-      legend: T.VMGroup,
-      fields: disableFields(
-        filterFieldsByHypervisor(VM_GROUP_FIELDS, hypervisor),
-        '',
-        oneConfig,
-        adminGroup
-      ),
-    },
-    {
-      id: 'vcenter',
-      legend: T.vCenterDeployment,
-      fields: disableFields(
-        filterFieldsByHypervisor(VCENTER_FIELDS, hypervisor),
+        filterFieldsByHypervisor(VCPU_FIELDS, hypervisor),
         '',
         oneConfig,
         adminGroup
@@ -158,11 +142,19 @@ const SECTIONS = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
  * @param {VmTemplateFeatures} [features] - Features
  * @param {object} oneConfig - Config of oned.conf
  * @param {boolean} adminGroup - User is admin or not
+ * @param {boolean} isVrouter - VRouter template
  * @returns {BaseSchema} Step schema
  */
-const SCHEMA = (hypervisor, isUpdate, features, oneConfig, adminGroup) =>
+const SCHEMA = (
+  hypervisor,
+  isUpdate,
+  features,
+  oneConfig,
+  adminGroup,
+  isVrouter
+) =>
   getObjectSchemaFromFields(
-    SECTIONS(hypervisor, isUpdate, features)
+    SECTIONS(hypervisor, isUpdate, features, oneConfig, adminGroup, isVrouter)
       .map(({ fields }) => fields)
       .flat()
   )

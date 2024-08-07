@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -34,7 +34,11 @@ const CARDINALITY_FIELD = {
   label: T.NumberOfVms,
 
   validation: number()
-    .positive('Number of VMs must be positive')
+    .test(
+      'Is positive?',
+      'Number of VMs cannot be negative!',
+      (value) => value >= 0
+    )
     .default(() => 0),
 }
 
@@ -81,8 +85,8 @@ export const SCHEMA = array()
           role.NAME.trim().length <= 128
       )
   )
-  .test('non-negative', 'Number of VMs must be a positive number', (roles) =>
-    roles.every((role) => role?.CARDINALITY >= 1)
+  .test('non-negative', 'Number of VMs must be non-negative', (roles) =>
+    roles.every((role) => role?.CARDINALITY >= 0)
   )
   .test(
     'valid-characters',

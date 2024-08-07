@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -19,10 +19,12 @@ const { httpMethod } = require('../../../utils/constants/defaults')
 const { GET } = httpMethod
 
 const basepath = '/logo'
-const GET_LOGO = 'get.logo'
+const GET_LOGO = 'logo.brand'
+const GET_TEMPLATE_LOGOS = 'logo.templates'
 
 const Actions = {
   GET_LOGO,
+  GET_TEMPLATE_LOGOS,
 }
 
 module.exports = {
@@ -30,6 +32,11 @@ module.exports = {
   Commands: {
     [GET_LOGO]: {
       path: `${basepath}/`,
+      httpMethod: GET,
+      auth: false,
+    },
+    [GET_TEMPLATE_LOGOS]: {
+      path: `${basepath}/templatelogos`,
       httpMethod: GET,
       auth: false,
     },

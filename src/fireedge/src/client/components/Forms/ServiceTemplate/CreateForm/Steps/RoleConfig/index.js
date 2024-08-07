@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -78,12 +78,15 @@ const STANDALONE_SCHEMA = getObjectSchemaFromFields([
  * @param {object} root0 - Props
  * @param {boolean} root0.standaloneModal - Run as standalone modal
  * @param {Function} root0.standaloneModalCallback - API callback function
+ * @param {object} root0.fetchedVmTemplates - Fetched VM templates
  * @returns {Component} - Role configuration component
  */
 export const Content = ({
   standaloneModal = false,
   standaloneModalCallback = () => {},
+  fetchedVmTemplates = {},
 }) => {
+  const { vmTemplates, error } = fetchedVmTemplates
   const [standaloneRole, setStandaloneRole] = useState([
     { SELECTED_VM_TEMPLATE_ID: [] },
   ])
@@ -101,9 +104,6 @@ export const Content = ({
     : useFormContext()
   const { getValues, setValue } = formMethods
 
-  /**
-   *
-   */
   const handleAddRoleClick = async () => {
     const role = getValues(STEP_ID)
 
@@ -218,6 +218,8 @@ export const Content = ({
                   roles={[standaloneRole]}
                   selectedRoleIndex={selectedRoleIndex}
                   onChange={HANDLE_VM_SELECT_STANDALONE_ROLE}
+                  vmTemplates={vmTemplates}
+                  error={error}
                 />
               </Box>
             )}
@@ -283,6 +285,7 @@ export const Content = ({
 Content.propTypes = {
   standaloneModal: PropTypes.bool,
   standaloneModalCallback: PropTypes.func,
+  fetchedVmTemplates: PropTypes.object,
 }
 
 /**

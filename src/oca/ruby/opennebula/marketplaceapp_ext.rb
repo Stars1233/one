@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -93,7 +93,6 @@ module OpenNebula::MarketPlaceAppExt
             # Exports an OpenNebula Image from this marketplace app
             #   @param options to export the image
             #     :vmtemplate_name [String] name of new image and template
-            #     :url_args [String] optional URL arguments
             #     :dsid [String] Datastore id to create the image
             #     :f_dsid [String] Files Datastore id
             #     :notemplate [Bool] if true do not create vm_template (if any)
@@ -125,10 +124,6 @@ module OpenNebula::MarketPlaceAppExt
                 NAME     = "#{options[:name]}"
                 FROM_APP = "#{self['ID']}"
                 EOT
-
-                if options[:url_args]
-                    tmpl << "URL_ARGS=\"#{options[:url_args]}\"\n"
-                end
 
                 #---------------------------------------------------------------
                 # Kernel or context images stored in a files datastore

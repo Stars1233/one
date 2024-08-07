@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -17,7 +17,7 @@
 module VNMMAD
 
     # NoVLANDriver class
-    class NoVLANDriver< VNMMAD::VLANDriver
+    class NoVLANDriver < VNMMAD::VLANDriver
 
         # Attributes that can be updated on update_nic action
         SUPPORTED_UPDATE = [
@@ -42,7 +42,7 @@ module VNMMAD
                 # Create the bridge.
                 create_bridge(@nic)
 
-                # Return if vlan device is already in the bridge.
+                # Skip if vlan device is already in the bridge.
                 next if !@nic[:phydev] || @nic[:phydev].empty? ||
                         @bridges[@nic[:bridge]].include?(@nic[:phydev])
 
@@ -77,20 +77,19 @@ module VNMMAD
 
                     next if @bridges[@nic[:bridge]].nil?
 
-                    # Return if the bridge doesn't exist because it was already
+                    # Skip if the bridge doesn't exist because it was already
                     # deleted (handles last vm with multiple nics on the same
                     # vlan)
                     next unless @bridges.include? @nic[:bridge]
 
-                    # Return if we want to keep the empty bridge
+                    # Skip if we want to keep the empty bridge
                     next if @nic[:conf][:keep_empty_bridge]
 
-                    # Return if the phydev device is not the only left device in
+                    # Skip if the phydev device is not the only left device in
                     # the bridge.A
                     if @nic[:phydev].nil?
                         keep = !@bridges[@nic[:bridge]].empty?
                     else
-
                         keep = @bridges[@nic[:bridge]].length > 1 ||
                             !@bridges[@nic[:bridge]].include?(@nic[:phydev])
                     end

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -104,15 +104,6 @@ import * as T from 'client/constants/translates'
  * @property {string} [TEMPLATE.VM_MAD] - VM manager
  * @property {string} [TEMPLATE.KVM_CPU_MODEL] - KVM CPU model
  * @property {string} [TEMPLATE.KVM_CPU_MODELS] - KVM CPU models
- * @property {string} [TEMPLATE.VCENTER_CCR_REF] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_DS_REF] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_HOST] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_INSTANCE_ID] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_NAME] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_PASSWORD] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_RESOURCE_POOL_INFO] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_USER] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_VERSION] - vCenter information
  * @property {string} [TEMPLATE.VERSION] - Version
  * @property {object} MONITORING - Monitoring information
  * @property {string} [MONITORING.TIMESTAMP] - Timestamp

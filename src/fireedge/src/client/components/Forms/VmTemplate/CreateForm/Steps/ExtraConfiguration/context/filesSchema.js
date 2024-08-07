@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -15,7 +15,7 @@
  * ------------------------------------------------------------------------- */
 import { string, ObjectSchema, array } from 'yup'
 
-import { T, INPUT_TYPES, HYPERVISORS, IMAGE_TYPES_STR } from 'client/constants'
+import { T, INPUT_TYPES, IMAGE_TYPES_STR } from 'client/constants'
 import {
   Field,
   filterFieldsByHypervisor,
@@ -27,14 +27,11 @@ import {
 import { useGetAllImagesQuery } from 'client/features/OneApi/image'
 import * as ImageModel from 'client/models/Image'
 
-const { vcenter } = HYPERVISORS
-
 /** @type {Field} Files ds field */
 export const FILES_DS = {
   name: 'CONTEXT.FILES_DS',
   label: T.ContextFiles,
   tooltip: T.ContextFilesConcept,
-  notOnHypervisors: [vcenter],
   type: INPUT_TYPES.AUTOCOMPLETE,
   multiple: true,
   disableEnter: true,

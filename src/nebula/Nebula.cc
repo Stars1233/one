@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/* Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                */
+/* Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                */
 /*                                                                            */
 /* Licensed under the Apache License, Version 2.0 (the "License"); you may    */
 /* not use this file except in compliance with the License. You may obtain    */
@@ -19,7 +19,6 @@
 #include "VirtualMachine.h"
 #include "SqliteDB.h"
 #include "MySqlDB.h"
-#include "PostgreSqlDB.h"
 #include "Client.h"
 #include "LogDB.h"
 #include "SystemDB.h"
@@ -424,14 +423,9 @@ void Nebula::start(bool bootstrap_only)
             db_backend = new MySqlDB(server, port, user, passwd, db_name,
                                      encoding, connections, compare_binary);
         }
-        else if ( db_backend_type == "postgresql" )
-        {
-            db_backend = new PostgreSqlDB(server, port, user, passwd, db_name,
-                                          connections);
-        }
         else
         {
-            throw runtime_error("DB BACKEND must be one of sqlite, mysql or postgresql.");
+            throw runtime_error("DB BACKEND must be sqlite or mysql.");
         }
 
         // ---------------------------------------------------------------------

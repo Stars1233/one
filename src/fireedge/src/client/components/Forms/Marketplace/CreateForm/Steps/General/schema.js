@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -48,7 +48,7 @@ const TYPE = {
   type: INPUT_TYPES.AUTOCOMPLETE,
   optionsOnly: true,
   values: arrayToOptions(Object.keys(MARKET_TYPES), {
-    addEmpty: true,
+    addEmpty: false,
     getText: (key) => T[MARKET_TYPES[key].text],
     getValue: (key) => MARKET_TYPES[key].value,
   }),

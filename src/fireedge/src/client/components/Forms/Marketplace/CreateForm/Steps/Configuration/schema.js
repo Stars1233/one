@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -18,14 +18,20 @@ import { getObjectSchemaFromFields } from 'client/utils'
 import { FIELDS as COMMON_FIELDS } from './fieldsCommon'
 import { FIELDS as HTTP_FIELDS } from './fieldsHttp'
 import { FIELDS as S3_FIELDS } from './fieldsS3'
-import { FIELDS as DOCKER_REGISTRY_FIELDS } from './fieldsDockerRegistry'
+import { FIELDS as LXC_FIELDS } from './fieldsLinuxContainters'
 
-const FIELDS = [
+/**
+ * Generate all the fields of the Linux Container Marketplace form.
+ *
+ * @param {boolean} update - If the user is updating or creating the form
+ * @returns {Array} - Fields array
+ */
+const FIELDS = (update) => [
   ...HTTP_FIELDS,
   ...S3_FIELDS,
-  ...DOCKER_REGISTRY_FIELDS,
   ...COMMON_FIELDS,
+  ...LXC_FIELDS(update),
 ]
-const SCHEMA = getObjectSchemaFromFields(FIELDS)
+const SCHEMA = getObjectSchemaFromFields(FIELDS())
 
 export { SCHEMA, FIELDS }

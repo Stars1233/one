@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -24,7 +24,6 @@ import {
   Disk,
   EXTERNAL_IP_ATTRS,
   HISTORY_ACTIONS,
-  HYPERVISORS,
   HistoryRecord,
   NIC_IP_ATTRS,
   Nic,
@@ -92,7 +91,7 @@ export const getHypervisor = (vm) => getLastHistory(vm)?.VM_MAD
  * @param {VM} vm - Virtual machine
  * @returns {boolean} If the hypervisor is vCenter
  */
-export const isVCenter = (vm) => getHypervisor(vm) === HYPERVISORS.vcenter
+export const isVCenter = (vm) => getHypervisor(vm) === 'vcenter'
 
 /**
  * @param {VM} vm - Virtual machine

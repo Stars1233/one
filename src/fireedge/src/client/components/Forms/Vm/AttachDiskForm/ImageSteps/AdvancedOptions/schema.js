@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -17,7 +17,6 @@ import { number, ObjectSchema } from 'yup'
 
 import {
   GENERAL_FIELDS,
-  VCENTER_FIELDS,
   EDGE_CLUSTER_FIELDS,
   THROTTLING_BYTES_FIELDS,
   THROTTLING_IOPS_FIELDS,
@@ -31,14 +30,11 @@ import {
   disableFields,
 } from 'client/utils'
 
-const { vcenter } = HYPERVISORS
-
 /** @type {Field} Size field */
 const SIZE = {
   name: 'SIZE',
   label: T.SizeOnInstantiate,
   tooltip: T.SizeOnInstantiateConcept,
-  notOnHypervisors: [vcenter],
   type: INPUT_TYPES.TEXT,
   htmlType: 'number',
   validation: number()
@@ -58,16 +54,6 @@ const SECTIONS = (hypervisor, oneConfig, adminGroup) => [
     legend: T.General,
     fields: disableFields(
       filterFieldsByHypervisor([SIZE, ...GENERAL_FIELDS], hypervisor),
-      'DISK',
-      oneConfig,
-      adminGroup
-    ),
-  },
-  {
-    id: 'vcenter',
-    legend: 'vCenter',
-    fields: disableFields(
-      filterFieldsByHypervisor(VCENTER_FIELDS, hypervisor),
       'DISK',
       oneConfig,
       adminGroup

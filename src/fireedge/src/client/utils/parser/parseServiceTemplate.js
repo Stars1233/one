@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -75,20 +75,28 @@ export const parseNetworkString = (network, reverse = false) => {
  *
  * @param {object | Array} obj - The object or array whose keys are to be converted.
  * @param {boolean} [toLower=true] - Whether to convert keys to lower case. If false, keys are converted to upper case.
+ * @param {number} depth - Control depth of conversion
  * @returns {object | Array} - The input object or array with keys converted to the specified case.
  */
-export const convertKeysToCase = (obj, toLower = true) => {
+export const convertKeysToCase = (obj, toLower = true, depth = Infinity) => {
+  if (depth < 1) return obj
+
   if (_.isArray(obj)) {
-    return obj.map((item) => convertKeysToCase(item, toLower))
+    return obj.map((item) => convertKeysToCase(item, toLower, depth))
   }
 
   if (_.isObject(obj) && !_.isDate(obj) && !_.isFunction(obj)) {
-    return _.mapValues(
-      _.mapKeys(obj, (_value, key) =>
-        toLower ? key.toLowerCase() : key.toUpperCase()
-      ),
-      (value) => convertKeysToCase(value, toLower)
+    const convertedObj = _.mapKeys(obj, (_value, key) =>
+      toLower ? key.toLowerCase() : key.toUpperCase()
     )
+
+    if (depth > 1) {
+      return _.mapValues(convertedObj, (value) =>
+        convertKeysToCase(value, toLower, depth - 1)
+      )
+    }
+
+    return convertedObj
   }
 
   return obj

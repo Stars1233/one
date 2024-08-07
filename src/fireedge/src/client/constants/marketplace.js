@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -134,12 +134,8 @@ export const MARKET_TYPES = {
     text: 'marketplace.types.s3',
     value: 's3',
   },
-  DOCKERHUB: {
-    text: 'marketplace.types.dockerhub',
-    value: 'dockerhub',
-  },
-  DOCKER_REGISTRY: {
-    text: 'marketplace.types.dockerRegistry',
-    value: 'docker_registry',
+  LINUX_CONTAINERS: {
+    text: 'marketplace.types.linuxcontainers',
+    value: 'linuxcontainers',
   },
 }

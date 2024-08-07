@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -33,7 +33,7 @@ module OpenNebulaHelper
 
     ONE_VERSION=<<~EOT
         OpenNebula #{OpenNebula::VERSION}
-        Copyright 2002-2023, OpenNebula Project, OpenNebula Systems
+        Copyright 2002-2024, OpenNebula Project, OpenNebula Systems
     EOT
 
     if ONE_LOCATION
@@ -2556,7 +2556,12 @@ Bash symbols must be escaped on STDIN passing'
     def self.scheduled_action_table(object)
         CLIHelper::ShowTable.new(nil, object) do
             column :ID, '', :adjust => true do |d|
-                d['ID']
+                warn = d['WARNING'].to_i
+
+                prefix = ''
+                prefix = '*' if d['DONE'].to_i <= 0 && warn != 0 && warn < Time.now.to_i
+
+                prefix + d['ID']
             end
 
             column :ACTION, '', :adjust => true do |d|

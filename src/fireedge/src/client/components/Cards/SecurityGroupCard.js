@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -23,6 +23,7 @@ import MultipleTags from 'client/components/MultipleTags'
 import { rowStyles } from 'client/components/Tables/styles'
 import { SecurityGroup, T } from 'client/constants'
 import { getColorFromString, getUniqueLabels } from 'client/models/Helper'
+import { useAuth } from 'client/features/Auth'
 import { Tr } from 'client/components/HOC'
 
 const getTotalOfResources = (resources) =>
@@ -40,6 +41,7 @@ const SecurityGroupCard = memo(
    */
   ({ securityGroup, rootProps, actions, onClickLabel, onDeleteLabel }) => {
     const classes = rowStyles()
+    const { labels: userLabels } = useAuth()
 
     const {
       ID,
@@ -63,12 +65,19 @@ const SecurityGroupCard = memo(
 
     const labels = useMemo(
       () =>
-        getUniqueLabels(LABELS).map((label) => ({
-          text: label,
-          stateColor: getColorFromString(label),
-          onClick: onClickLabel,
-          onDelete: onDeleteLabel,
-        })),
+        getUniqueLabels(LABELS).reduce((acc, label) => {
+          if (userLabels?.includes(label)) {
+            acc.push({
+              text: label,
+              dataCy: `label-${label}`,
+              stateColor: getColorFromString(label),
+              onClick: onClickLabel,
+              onDelete: onDeleteLabel,
+            })
+          }
+
+          return acc
+        }, []),
       [LABELS, onDeleteLabel]
     )
 

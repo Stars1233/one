@@ -1,7 +1,7 @@
 ---
 
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -282,6 +282,26 @@
   mode: '0640'
   src: src/vmm_mad/exec/vmm_exec_vcenter.conf
 
+- name: /etc/one/alertmanager/alertmanager.yml
+  class: Yaml
+  owner: root
+  group: oneadmin
+  mode: '0640'
+  src: src/oneprometheus/alertmanager/etc/alertmanager.yml
+
+- name: /etc/one/prometheus/prometheus.yml
+  class: Yaml
+  owner: root
+  group: oneadmin
+  mode: '0640'
+  src: src/oneprometheus/prometheus/etc/prometheus.yml
+
+- name: /etc/one/prometheus/rules.yml
+  class: Yaml
+  owner: root
+  group: oneadmin
+  mode: '0640'
+  src: src/oneprometheus/prometheus/etc/rules.yml
 
 ### Dir: /var/lib/one/remotes/etc/ #########################
 
@@ -319,6 +339,13 @@
   group: oneadmin
   mode: '0640'
   src: src/im_mad/remotes/lib/probe_db.conf
+
+- name: /var/lib/one/remotes/etc/im/kvm-probes.d/guestagent.conf
+  class: Yaml
+  owner: oneadmin
+  group: oneadmin
+  mode: '0640'
+  src: src/im_mad/remotes/kvm-probes.d/guestagent.conf
 
 - name: /var/lib/one/remotes/etc/im/qemu-probes.d/pci.conf
   class: Yaml

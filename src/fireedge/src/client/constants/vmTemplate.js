@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -31,9 +31,6 @@ import { LockInfo, Permissions } from 'client/constants/common'
  * @property {string|number} REGTIME - Registration time
  * @property {object} TEMPLATE - Template information
  * @property {string} [TEMPLATE.CONTEXT] - Context
- * @property {string} [TEMPLATE.VCENTER_CCR_REF] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_INSTANCE_ID] - vCenter information
- * @property {string} [TEMPLATE.VCENTER_TEMPLATE_REF] - vCenter information
  */
 
 /**
@@ -109,26 +106,6 @@ export const PCI_TYPES = { MANUAL: 'pci_manual', AUTOMATIC: 'pci_automatic' }
 export const VCENTER_FIRMWARE_TYPES = FIRMWARE_TYPES.concat(['uefi'])
 
 export const DEFAULT_TEMPLATE_LOGO = 'images/logos/default.png'
-
-export const TEMPLATE_LOGOS = {
-  'Alpine Linux': 'images/logos/alpine.png',
-  ALT: 'images/logos/alt.png',
-  Arch: 'images/logos/arch.png',
-  CentOS: 'images/logos/centos.png',
-  Debian: 'images/logos/debian.png',
-  Devuan: 'images/logos/devuan.png',
-  Fedora: 'images/logos/fedora.png',
-  FreeBSD: 'images/logos/freebsd.png',
-  HardenedBSD: 'images/logos/hardenedbsd.png',
-  Knoppix: 'images/logos/knoppix.png',
-  Linux: 'images/logos/linux.png',
-  Oracle: 'images/logos/oracle.png',
-  RedHat: 'images/logos/redhat.png',
-  Suse: 'images/logos/suse.png',
-  Ubuntu: 'images/logos/ubuntu.png',
-  'Windows xp': 'images/logos/windowsxp.png',
-  'Windows 10': 'images/logos/windows8.png',
-}
 
 /** @enum {string} FS freeze options type */
 export const FS_FREEZE_OPTIONS = {

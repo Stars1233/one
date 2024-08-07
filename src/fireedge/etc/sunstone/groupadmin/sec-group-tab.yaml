@@ -8,13 +8,13 @@ resource_name: "SECURITY-GROUP"
 # Actions - Which buttons are visible to operate over the resources
 
 actions:
-  create_dialog: true
-  update_dialog: true
-  clone: true
-  commit: true
-  chown: true
-  chgrp: true
-  delete: true
+  create_dialog: false
+  update_dialog: false
+  clone: false
+  commit: false
+  chown: false
+  chgrp: false
+  delete: false
 
 # Filters - List of criteria to filter the resources
 
@@ -29,16 +29,16 @@ info-tabs:
     information_panel:
       enabled: true
       actions:
-        rename: true
+        rename: false
     permissions_panel:
       enabled: true
       actions:
-        chmod: true
+        chmod: false
     ownership_panel:
       enabled: true
       actions:
-        chown: true
-        chgrp: true
+        chown: false
+        chgrp: false
     rules_panel:
       enabled: true
     attributes_panel:

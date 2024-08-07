@@ -8,7 +8,7 @@ resource_name: "SERVICE"
 # Actions - Which buttons are visible to operate over the resources
 
 actions:
-  create_dialog: true # reference to deploy_dialog in service-template-tab.yaml
+  instantiate_dialog: true # reference to deploy_dialog in service-template-tab.yaml
   recover: true
   recover_delete: true
   delete: true

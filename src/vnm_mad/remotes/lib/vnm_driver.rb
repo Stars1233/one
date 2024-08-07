@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -14,8 +14,10 @@
 # limitations under the License.                                             #
 #--------------------------------------------------------------------------- #
 
-require 'shellwords'
+require 'json'
 require 'open3'
+require 'resolv'
+require 'shellwords'
 
 require_relative 'vf'
 
@@ -224,12 +226,12 @@ module VNMMAD
             return if @bridges.key?(nic[:bridge])
 
             OpenNebula.exec_and_log("#{command(:ip)} link add name " \
-                "#{nic[:bridge]} type bridge #{list_bridge_options(nic)}", nil, 2)
+                "'#{nic[:bridge]}' type bridge #{list_bridge_options(nic)}", nil, 2)
 
             @bridges[nic[:bridge]] = []
 
             OpenNebula.exec_and_log("#{command(:ip)} " \
-                                    "link set #{nic[:bridge]} up")
+                                    "link set '#{nic[:bridge]}' up")
         end
 
         # Reads config and return str with switches
@@ -280,8 +282,6 @@ module VNMMAD
 
             bridge_options_str.strip
         end
-
-
 
         # Returns a filter object based on the contents of the template
         #

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -16,6 +16,7 @@
 import { string, boolean } from 'yup'
 
 import Image from 'client/components/Image'
+import { useGetTemplateLogosQuery } from 'client/features/OneApi/logo'
 import { Field, arrayToOptions } from 'client/utils'
 import {
   T,
@@ -23,7 +24,6 @@ import {
   INPUT_TYPES,
   HYPERVISORS,
   DEFAULT_TEMPLATE_LOGO,
-  TEMPLATE_LOGOS,
 } from 'client/constants'
 
 /**
@@ -77,14 +77,18 @@ export const LOGO = {
   label: T.Logo,
   type: INPUT_TYPES.AUTOCOMPLETE,
   optionsOnly: true,
-  values: arrayToOptions(
-    [['-', DEFAULT_TEMPLATE_LOGO], ...Object.entries(TEMPLATE_LOGOS)],
-    {
-      addEmpty: false,
-      getText: ([name]) => name,
-      getValue: ([, logo]) => logo,
-    }
-  ),
+  values: () => {
+    const { data: logos } = useGetTemplateLogosQuery()
+
+    return arrayToOptions(
+      [['-', DEFAULT_TEMPLATE_LOGO], ...Object.entries(logos || {})],
+      {
+        addEmpty: false,
+        getText: ([name]) => name,
+        getValue: ([, logo]) => logo,
+      }
+    )
+  },
   renderValue: (value) => (
     <Image
       alt="logo"

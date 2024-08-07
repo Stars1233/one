@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -37,6 +37,7 @@ const TextController = memo(
     fieldProps = {},
     readOnly = false,
     onConditionChange,
+    defaultValue,
   }) => {
     const watch = useWatch({
       name: dependencies,
@@ -47,7 +48,7 @@ const TextController = memo(
     const {
       field: { ref, value = '', onChange, onBlur, ...inputProps },
       fieldState: { error },
-    } = useController({ name, control })
+    } = useController({ name, control, defaultValue })
 
     const formContext = useFormContext()
 
@@ -131,6 +132,7 @@ TextController.propTypes = {
   fieldProps: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   readOnly: PropTypes.bool,
   onConditionChange: PropTypes.func,
+  defaultValue: PropTypes.string,
 }
 
 TextController.displayName = 'TextController'

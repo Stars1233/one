@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -26,7 +26,6 @@ from SCons.Script import ARGUMENTS, SConscript
 
 sys.path.append("./share/scons")
 from lex_bison import *
-
 
 # Get git version
 try:
@@ -136,8 +135,7 @@ vars = Variables('custom.py')
 vars.Add('sqlite_dir', 'Path to sqlite directory', '')
 vars.Add('sqlite', 'Build with SQLite support', 'yes')
 vars.Add('mysql', 'Build with MySQL support', 'no')
-vars.Add('postgresql', 'Build with PostgreSQL support', 'no')
-vars.Add('parsers', 'Obsolete. Rebuild flex/bison files', 'no')
+vars.Add('parsers', 'Rebuild flex/bison files', 'no')
 vars.Add('xmlrpc', 'Path to xmlrpc directory', '')
 vars.Add('new_xmlrpc', 'Use xmlrpc-c version >=1.31', 'no')
 vars.Add('sunstone', 'Build Sunstone', 'no')
@@ -147,6 +145,7 @@ vars.Add('rubygems', 'Generate Ruby gems', 'no')
 vars.Add('svncterm', 'Build VNC support for LXD drivers', 'yes')
 vars.Add('context', 'Download guest contextualization packages', 'no')
 vars.Add('strict', 'Strict C++ compiler, more warnings, treat warnings as errors', 'no')
+vars.Add('download', 'Download 3rdParty tools', 'no')
 env = Environment(variables = vars)
 Help(vars.GenerateHelpText(env))
 
@@ -172,16 +171,6 @@ if mysql == 'yes':
     main_env.Append(LIBS=['mysqlclient'])
 else:
     main_env.Append(mysql='no')
-
-# PostgreSql
-postgresql = ARGUMENTS.get('postgresql', 'no')
-if postgresql == 'yes':
-    main_env.Append(postgresql='yes')
-    main_env.Append(CPPPATH=['/usr/include/postgresql'])
-    main_env.Append(CPPFLAGS=["-DPOSTGRESQL_DB"])
-    main_env.Append(LIBS=['libpq'])
-else:
-    main_env.Append(postgresql='no')
 
 # Flag to compile with xmlrpc-c versions prior to 1.31 (September 2012)
 new_xmlrpc = ARGUMENTS.get('new_xmlrpc', 'no')
@@ -224,6 +213,15 @@ if strict == 'yes':
         "-Wno-unused-result"
     ])
 
+# Download: Download 3rdParty tools
+download = ARGUMENTS.get('download', 'no')
+if download == 'yes':
+    tools = Popen(['find', '.', '-type', 'f', '-executable', '-path', '*/vendor/download'], stdout=PIPE).stdout.readlines()
+
+    for t in tools:
+        tool = t.rstrip().decode()
+        print("Executing: {}".format(tool))
+        Popen(tool)
 
 # Rubygem generation
 main_env.Append(rubygems=ARGUMENTS.get('rubygems', 'no'))

@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -34,7 +34,6 @@ import {
 import { cloneObject, set } from 'client/utils'
 
 const NSX_ATTRIBUTES_REG = /^NSX_/
-const VCENTER_ATTRIBUTES_REG = /^VCENTER_(?!(RESOURCE_POOL)$)/
 const HIDDEN_ATTRIBUTES_REG =
   /^(HOST|VM|WILDS|ZOMBIES|RESERVED_CPU|RESERVED_MEM|EC2_ACCESS|EC2_SECRET|CAPACITY|REGION_NAME)$/
 
@@ -49,7 +48,6 @@ const HIDDEN_ATTRIBUTES_REG =
 const HostInfoTab = ({ tabProps = {}, id }) => {
   const {
     information_panel: informationPanel,
-    vcenter_panel: vcenterPanel,
     nsx_panel: nsxPanel,
     attributes_panel: attributesPanel,
   } = tabProps
@@ -71,13 +69,8 @@ const HostInfoTab = ({ tabProps = {}, id }) => {
     [getActionsAvailable]
   )
 
-  const {
-    attributes,
-    nsx: nsxAttributes,
-    vcenter: vcenterAttributes,
-  } = filterAttributes(TEMPLATE, {
+  const { attributes, nsx: nsxAttributes } = filterAttributes(TEMPLATE, {
     extra: {
-      vcenter: VCENTER_ATTRIBUTES_REG,
       nsx: NSX_ATTRIBUTES_REG,
     },
     hidden: HIDDEN_ATTRIBUTES_REG,
@@ -109,14 +102,6 @@ const HostInfoTab = ({ tabProps = {}, id }) => {
           actions={getActions(attributesPanel?.actions)}
           title={Tr(T.Attributes)}
           fullWidth={true}
-        />
-      )}
-      {vcenterPanel?.enabled && vcenterAttributes && (
-        <AttributePanel
-          {...ATTRIBUTE_FUNCTION}
-          actions={getActions(vcenterPanel?.actions)}
-          attributes={vcenterAttributes}
-          title={`vCenter ${Tr(T.Information)}`}
         />
       )}
       {nsxPanel?.enabled && nsxAttributes && (

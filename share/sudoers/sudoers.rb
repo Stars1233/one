@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------- #
-# Copyright 2002-2023, OpenNebula Project, OpenNebula Systems                #
+# Copyright 2002-2024, OpenNebula Project, OpenNebula Systems                #
 #                                                                            #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may    #
 # not use this file except in compliance with the License. You may obtain    #
@@ -17,7 +17,7 @@
 # Holds configuration about sudoers requirements for OpeNebula
 class Sudoers
 
-    NODECMDS = [:NET, :OVS, :LVM, :LXD, :MEM, :VGPU]
+    NODECMDS = [:NET, :OVS, :LVM, :LXC, :MEM, :VGPU]
 
     attr_accessor :cmds
 
@@ -30,20 +30,16 @@ class Sudoers
                 'ip6tables',
                 'ipset',
                 'ip link *',
-                'ip tuntap *',
+                'ip neighbour *',
                 'ip route *',
-                'ip neighbour *'
+                'ip rule *',
+                'ip tuntap *'
             ],
             :LVM    => [
                 'lvcreate', 'lvremove', 'lvs', 'vgdisplay', 'lvchange', 'lvscan', 'lvextend'
             ],
             :OVS    => ['ovs-ofctl', 'ovs-vsctl'],
             :CEPH   => ['rbd'],
-            :LXD    => [
-                '/snap/bin/lxc', '/usr/bin/catfstab', 'mount', 'umount', 'mkdir', 'lsblk',
-                'losetup', 'kpartx', 'qemu-nbd', 'blkid', 'e2fsck', 'resize2fs', 'xfs_growfs',
-                'rbd-nbd', 'xfs_admin', 'tune2fs'
-            ],
             :HA => [
                 'systemctl start opennebula-flow',
                 'systemctl stop opennebula-flow',
@@ -62,18 +58,14 @@ class Sudoers
                 'arping',
                 'ip address *'
             ],
-            :MARKET => ["#{lib_location}/sh/create_container_image.sh",
-                        "#{lib_location}/sh/create_docker_image.sh"],
-            :FIRECRACKER => ['/usr/bin/jailer',
-                             '/usr/sbin/one-clean-firecracker-domain',
-                             '/usr/sbin/one-prepare-firecracker-domain'],
             :LXC => [
                 'mount', 'umount', 'bindfs', 'losetup', 'qemu-nbd', 'lxc-attach', 'lxc-config',
                 'lxc-create', 'lxc-destroy', 'lxc-info', 'lxc-ls', 'lxc-start', 'lxc-stop',
                 'lxc-console', 'e2fsck', 'resize2fs', 'xfs_growfs', 'rbd-nbd'
             ],
-            :MEM => ['sysctl vm.drop_caches=3 vm.compact_memory=1'],
-            :VGPU => ['sudo', '/var/tmp/one/vgpu']
+            :MARKET => ["#{lib_location}/sh/create_container_image.sh"],
+            :MEM    => ['sysctl vm.drop_caches=3 vm.compact_memory=1'],
+            :VGPU   => ['sudo', '/var/tmp/one/vgpu']
         }
     end
 

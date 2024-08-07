@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------- *
- * Copyright 2002-2023, OpenNebula Project, OpenNebula Systems               *
+ * Copyright 2002-2024, OpenNebula Project, OpenNebula Systems               *
  *                                                                           *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may   *
  * not use this file except in compliance with the License. You may obtain   *
@@ -20,7 +20,7 @@ import { DatastoresTable } from 'client/components/Tables'
 import { SCHEMA } from 'client/components/Forms/Vm/BackupForm/Steps/DatastoresTable/schema'
 
 import { Step } from 'client/utils'
-import { T } from 'client/constants'
+import { T, VM_EXTENDED_POOL } from 'client/constants'
 
 export const STEP_ID = 'datastore'
 
@@ -34,6 +34,12 @@ const Content = ({ data, app }) => {
     setValue(STEP_ID, original.ID !== undefined ? [original] : [])
   }
 
+  // Create initial state and only add select rows if there is value in NAME (if not, there is no value selected)
+  const initialState = {
+    filters: [{ id: 'TYPE', value: 'BACKUP_DS' }],
+  }
+  NAME && (initialState.selectedRowIds = { [NAME]: true })
+
   return (
     <DatastoresTable
       singleSelect
@@ -42,10 +48,7 @@ const Content = ({ data, app }) => {
       pageSize={5}
       getRowId={(row) => String(row.NAME)}
       filter={(DATA) => DATA.filter((ds) => ds.TYPE === '3')}
-      initialState={{
-        selectedRowIds: { [NAME]: true },
-        filters: [{ id: 'TYPE', value: 'BACKUP_DS' }],
-      }}
+      initialState={initialState}
       onSelectedRowsChange={handleSelectedRows}
     />
   )
@@ -63,7 +66,7 @@ const DatastoreStep = (app) => ({
   resolver: SCHEMA,
   defaultDisabled: {
     statePaths: [
-      'oneApi.queries.getVms(undefined).data',
+      `oneApi.queries.getVms({"extended":${VM_EXTENDED_POOL}}).data`,
       'general.selectedIds',
     ],
     condition: (vmsData, selectedIds) =>
